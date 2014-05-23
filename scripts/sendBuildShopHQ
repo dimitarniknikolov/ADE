@@ -1,0 +1,170 @@
+#!/bin/bash
+# 
+# This is a script that sends Android build file to given list of mail accounts.
+# It finds the original .apk file and renames it. The new name includes the project name and the 
+# current formatted date. The renamed file is included in the sending mail ad attachment.
+# In the mail body will be included the git commit history for the period from the last sent mail 
+# with this script and current moment.
+# This script uses mutt mail client. To install it type in the terminal:
+# $sudo apt-get install mutt
+# To configure mutt see the example in the end of this file.
+
+
+readonly SIGNATURE='<div>
+	<div dir="ltr">
+		<div>
+			<p style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;margin:0px">
+			<span style="font-size:small;color:rgb(128,128,128)">
+			<br>
+			</span>
+			</p>
+			<hr size="1" style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;min-height:1px;border-right-width:0px;border-bottom-width:0px;border-left-width:0px;border-top-style:solid;border-top-color:rgb(229,229,229);margin:0.5em 0px;padding:0px">
+			<p style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;margin:0px">
+			</p>
+			<table border="0"><tbody><tr><td width="135px"><span style="font-size:small;color:rgb(51,51,51);font-family:Helvetica,sans-serif">
+			<strong>
+			Dimitar Nikolov&nbsp;
+			</strong>
+			<br>
+			</span>
+			<span style="font-family:Helvetica,sans-serif;color:rgb(113,179,227);font-size:small">
+			Android Developer
+			</span>
+			</td>
+			<td>
+			<a title="MentorMate" href="http://mentormate.com/" style="color:rgb(17,85,204)" target="_blank">
+			<img src="http://mobcon.com/wp-content/uploads/2012/11/mentormate-logo-side.png" alt="MentorMate" width="204" height="44"></a></td></tr></tbody></table><p></p></div><div><div style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;margin:0px 0px 8px"><hr size="1" style="min-height:1px;border-right-width:0px;border-bottom-width:0px;border-left-width:0px;border-top-style:solid;border-top-color:rgb(229,229,229);margin:0.5em 0px;padding:0px"><p style="margin:0px"><span style="font-size:small;color:rgb(128,128,128)">
+			Office&nbsp;<a title="Click here to call phone number" style="color:rgb(113,179,227);text-decoration:initial">(612) 823-4000&nbsp;</a>
+			<br>
+			Mobile&nbsp;<a title="Click here to call phone number" style="color:rgb(113,179,227);text-decoration:initial">(359) 883-428-208&nbsp;</a>
+			<br>
+			Skype&nbsp;<a title="Click here to call phone number" style="color:rgb(113,179,227);text-decoration:initial">mentormate_dimitar.nikolov&nbsp;</a>
+			<br>
+			</span>
+			</p>
+			<hr size="1" style="min-height:1px;border-right-width:0px;border-bottom-width:0px;border-left-width:0px;border-top-style:solid;border-top-color:rgb(229,229,229);margin:0.5em 0px;padding:0px"><p style="margin:0px"><span style="font-size:small;color:rgb(128,128,128)">
+			<a title="Click here for directions to the MentorMate office" href="http://goo.gl/maps/PYpGW" style="color:rgb(113,179,227);text-decoration:initial" target="_blank">3036 Hennepin Ave Minneapolis, MN 55408</a></span></p><hr size="1" style="min-height:1px;border-right-width:0px;border-bottom-width:0px;border-left-width:0px;border-top-style:solid;border-top-color:rgb(229,229,229);margin:0.5em 0px;padding:0px"><div style="clear:both"></div></div><a href="http://www.facebook.com/mentormate" style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;color:rgb(17,85,204);text-decoration:initial" target="_blank"><img width="16" height="16" alt="Facebook" border="0" src="https://s3.amazonaws.com/images.wisestamp.com/facebook.png" style="padding:0px 0px 5px;vertical-align:middle">&nbsp;</a><span style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium"></span><a href="https://twitter.com/MentorMate" style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;color:rgb(17,85,204);text-decoration:initial" target="_blank"><img width="16" height="16" alt="Twitter" border="0" src="https://s3.amazonaws.com/images.wisestamp.com/twitter.png" style="padding:0px 0px 5px;vertical-align:middle">&nbsp;</a><span style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium"></span><a href="https://plus.google.com/106373001213677652836/" style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;color:rgb(17,85,204);text-decoration:initial" target="_blank"><img width="16" height="16" alt="Google Plus" border="0" src="https://s3.amazonaws.com/images.wisestamp.com/googleplus.png" style="padding:0px 0px 5px;vertical-align:middle">&nbsp;</a><span style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium"></span><a href="http://www.linkedin.com/company/145735?goback=%2Efcs_GLHD_mentormate_false_*2_*2_*2_*2_*2_*2_*2_*2_*2_*2_*2_*2&amp;trk=ncsrch_hits" style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;color:rgb(17,85,204);text-decoration:initial" target="_blank"><img width="16" height="16" alt="LinkedIn" border="0" src="https://s3.amazonaws.com/images.wisestamp.com/linkedin.png" style="padding:0px 0px 5px;vertical-align:middle">&nbsp;</a><span style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium"></span><a href="http://pinterest.com/mentormateus/" style="font-family:Verdana,Arial,Helvetica,sans-serif;font-size:medium;color:rgb(17,85,204);text-decoration:initial" target="_blank"><img width="16" height="16" alt="pinterest" border="0" src="https://s3.amazonaws.com/images.wisestamp.com/pinterest.png" style="padding:0px 0px 5px;vertical-align:middle">
+			</a>
+			</div>
+			</div>
+</div>'
+
+
+#rename this constant field according to the given project
+readonly PROJECT_NAME=ShopHQ 
+
+# this is default project structure for Eclipse Android project
+BUILD_FILE=./"$PROJECT_NAME"/bin/"$PROJECT_NAME".apk
+
+# mail accounts to which the mail will be send. Separate them with blank space.
+readonly MAIL_LIST="dimitar.nikolov@mentormate.com"
+
+readonly DATE_GIT_AFTER_FILENAME=".gitAfter.tmp"
+readonly FILE_BODY=".bodyFile.tmp"
+readonly HELLO_TEAM="Hello team,<br><br>the new things in this build are:<br><br>"
+readonly REGARDS="<br><br>Best regards,"
+
+date=""
+newFileName=""
+body=""
+tempDate=""
+gitDateAfter=""
+
+function initVariables {
+  # set BUILD_FILE to the given path as parameter if it's available
+  APK_FILE_NAME=$1
+  if [ -n "$APK_FILE_NAME" ]; 
+  then
+    BUILD_FILE=$APK_FILE_NAME
+  fi
+}
+
+function renameBuild {
+  getFormattedCurrentDate
+  newFileName="$PROJECT_NAME$date.apk"
+  cp "$BUILD_FILE" "./$newFileName"
+}
+
+function getFormattedCurrentDate {
+  year=$(date +%Y)
+  month=$(date +%m)
+  day=$(date +%d)
+  hour=$(date +%H)
+  min=$(date +%M)
+  date="_$month"
+  date+="_$day"
+  date+="_$year"
+  date+="_$hour$min"
+}
+
+function generateBodyFile {
+  touch $FILE_BODY
+  echo -e "$HELLO_TEAM \n" > $FILE_BODY
+  if [ -f $DATE_GIT_AFTER_FILENAME ];
+  then
+    gitDateAfter=$(cat $DATE_GIT_AFTER_FILENAME)
+    git log --pretty=format:"	- %x09%s (%an)<br>" --after={"$gitDateAfter"} >> $FILE_BODY
+    echo "File $DATE_GIT_AFTER_FILENAME exists"
+  else
+    git log --pretty=format:"	- %x09%s (%an)<br>" > $FILE_BODY
+    echo "File $DATE_GIT_AFTER_FILENAME does not exists"
+  fi
+  echo "gitDateAfter = $gitDateAfter"
+  echo -e "$REGARDS\n$SIGNATURE" >> $FILE_BODY
+}
+
+function putLastGitAfterDate {
+  touch $DATE_GIT_AFTER_FILENAME
+    year=$(date +%Y)
+    month=$(date +%m)
+    day=$(date +%d)
+    hour=$(date +%H)
+    min=$(date +%M)
+    currGitDate="$year"
+    currGitDate+="-$month"
+    currGitDate+="-$day"
+    currGitDate+="/$hour"
+    currGitDate+=":$min"
+    echo "git date $currGitDate"
+    echo $currGitDate > "$DATE_GIT_AFTER_FILENAME"
+}
+
+function sendMail {
+  mutt -e "set content_type=text/html" "$MAIL_LIST" -s "$PROJECT_NAME Android Build - $newFileName"    -a "./$newFileName" < "./$FILE_BODY"
+}
+
+renameBuild
+generateBodyFile
+putLastGitAfterDate
+sendMail
+
+rm .bodyFile.tmp
+rm ./"$newFileName"
+
+
+
+# ~/.muttrc EXAMPLE FILE FOR GMAIL SETUP
+# 
+# set imap_user = "youraccount@gmail.com"
+# set imap_pass = "yourpass"
+# 
+# set smtp_url = "smtp://youraccount@smtp.gmail.com:587/"
+# set smtp_pass = "yourpass"
+# set from = "youraccount@gmail.com"
+# set realname = "your name"
+# 
+# #set folder = "imaps://imap.gmail.com:993"
+# #set spoolfile = "+INBOX"
+# #set postponed="+[Gmail]/Drafts"
+# 
+# set header_cache=~/.mutt/cache/headers
+# set message_cachedir=~/.mutt/cache/bodies
+# set certificate_file=~/.mutt/certificates
+# 
+# set move = no
+
+# set spoolfile = imaps://imap.gmail.com:993/INBOX
+# set folder = imaps://imap.gmail.com:993
+# set record="imaps://imap.gmail.com/[Gmail]/Sent Mail"
+# set postponed="imaps://imap.gmail.com/[Gmail]/Drafts"
+

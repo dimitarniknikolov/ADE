@@ -1,0 +1,41 @@
+#!/bin/bash
+# Provide image size for mdpi, hdpi, xhdpi or xxhdpi density and the script will return all sizes.
+
+read -p "Choose mdpi:1 hdpi:2 xhdpi:3 xxhdpi:4 " i
+
+case $i in
+1)
+  read -p "Enter value for mdpi = " mdpi
+  hdpi=$((mdpi*3/2))
+  xhdpi=$((mdpi*2))
+  tvdpi=$((mdpi*133/100))
+  xxhdpi=$((mdpi*3))
+;;
+2)
+  read -p "Enter value for hdpi = " hdpi
+  mdpi=$((hdpi*2/3))
+  xhdpi=$((mdpi*2))
+  xxhdpi=$((mdpi*3))
+  tvdpi=$((mdpi*133/100))
+;;
+3)
+  read -p "Enter value for xhdpi = " xhdpi
+  mdpi=$((xhdpi/2))
+  hdpi=$((mdpi*3/2))
+  xxhdpi=$((mdpi*3))
+  tvdpi=$((mdpi*133/100))
+;;
+4)
+  read -p "Enter value for xxhdpi = " xxhdpi
+  mdpi=$((xxhdpi/3))
+  hdpi=$((mdpi*15/10))
+  xhdpi=$((mdpi*2))
+  tvdpi=$((mdpi*133/100))
+;;
+esac
+
+echo "mdpi = $mdpi"
+echo "tvdpi = $tvdpi" 
+echo "hdpi = $hdpi"
+echo "xhdpi = $xhdpi"
+echo "xxdhpi = $xxhdpi"

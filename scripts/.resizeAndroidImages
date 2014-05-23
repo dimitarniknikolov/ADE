@@ -1,0 +1,65 @@
+#!/bin/bash
+# My first script
+
+m='_mdpi'
+h='_hdpi'
+xh='_xhdpi'
+xx='_xxhdpi'
+
+x='x'
+
+read -p "Image name : " image
+
+
+
+read -p "Choose mdpi:1 hdpi:2 xhdpi:3 xxhdpi:4 " i
+
+
+
+case $i in
+1)
+  read -p "Enter value for mdpi = " mdpi
+  hdpi=$((mdpi*3/2))
+  xhdpi=$((mdpi*2))
+  xxhdpi=$((mdpi*3))
+;;
+2)
+  read -p "Enter value for hdpi = " hdpi
+  mdpi=$((hdpi*2/3))
+  xhdpi=$((mdpi*2))
+  xxhdpi=$((mdpi*3))
+;;
+3)
+  read -p "Enter value for xhdpi = " xhdpi
+  mdpi=$((xhdpi/2))
+  hdpi=$((mdpi*3/2))
+  xxhdpi=$((mdpi*3))
+;;
+4)
+  read -p "Enter value for xxhdpi = " xxhdpi
+  mdpi=$((xxhdpi/3))
+  hdpi=$((mdpi*3/2))
+  xhdpi=$((mdpi*2))
+;;
+esac
+
+echo "mdpi = $mdpi"
+echo "hdpi = $hdpi"
+echo "xhdpi = $xhdpi"
+echo "xxdhpi = $xxhdpi"
+
+
+mdpiName=$image$m
+hdpiName=$image$h
+xhdpiName=$image$xh
+xxhdpiName=$image$xx
+
+resizeM=$mdpi$x$mdpi
+resizeH=$hdpi$x$hdpi
+resizeXH=$xhdpi$x$xhdpi
+resizeXX=$xxhdpi$x$xxhdpi
+
+convert $image -resize $resizeM $mdpiName
+convert $image -resize $resizeH $hdpiName
+convert $image -resize $resizeXH $xhdpiName
+convert $image -resize $resizeXX $xxhdpiName

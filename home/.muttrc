@@ -1,0 +1,22 @@
+set imap_user = "dimitarniknikolov@gmail.com"
+set imap_pass = "JudgeNot88"
+
+set smtp_url = "smtp://dimitarniknikolov@smtp.gmail.com:587/"
+set smtp_pass = "JudgeNot88"
+set from = "dimitarniknikolov@gmail.com"
+set realname = "Dimitar Nikolov"
+
+#set folder = "imaps://imap.gmail.com:993"
+#set spoolfile = "+INBOX"
+#set postponed="+[Gmail]/Drafts"
+
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+
+set move = no
+
+set spoolfile = imaps://imap.gmail.com:993/INBOX
+set folder = imaps://imap.gmail.com:993
+set record="imaps://imap.gmail.com/[Gmail]/Sent Mail"
+set postponed="imaps://imap.gmail.com/[Gmail]/Drafts"

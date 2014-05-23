@@ -1,0 +1,7 @@
+[color]
+	ui = true
+[user]
+	email = dimitar.nikolov@mentormate.com
+	name = Dimitar Nikolov
+[push]
+	default = simple

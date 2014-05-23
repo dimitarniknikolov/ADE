@@ -1,0 +1,2 @@
+#!/bin/bash
+mutt dimitarniknikolov@gmail.com tudle_@abv.bg -s "ShopHQ Android Build - ShopHQ_12_12_2013_1250_demo.apk" -a ~/snapshot70.png < ~/XtifyKeys
