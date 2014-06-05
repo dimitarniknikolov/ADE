@@ -120,21 +120,14 @@ export USE_CCACHE=1
 
 alias df="git diff"
 alias gst="git status"
-alias andro="cd /home/dimitar/.bin/adt-bundle-linux/sdk/platform-tools/"
-alias poc="cd /home/dimitar/projects/poc/"
-alias dashboard="cd /home/dimitar/projects/poc/dashboard/"
-alias gppa="git pull && git submodule foreach git pull && git push && git submodule foreach git push"
-alias logcat="~/Ubuntu\ One/.bin/cl.py"
-alias monster="cd /media/Anothers/MASConsult/monsterColoring/"
-alias qrleadr="cd /media/Anothers/MASConsult/qrleadr/"
 alias add="git add"
-alias esprinet="cd /home/dimitar/projects/esprinet/"
-alias vashki="cd /home/dimitar/projects/vashki/"
-alias gazili="cd /home/dimitar/projects/gazzili-for-android/"
-alias day_night="cd /home/dimitar/projects/day_night_LWP/"
-alias crush_it="cd /home/dimitar/projects/crush-it/"
-alias heart="cd /home/dimitar/projects/heartWidget/"
+alias ad="git add"
+alias pull="git pull"
+alias push="git push"
+alias com="git commit -m"
 alias gpp="git pull git push"
+alias gppa="git pull && git submodule foreach git pull && git push && git submodule foreach git push"
+alias andro="cd /home/dimitar/.bin/adt-bundle-linux/sdk/platform-tools/"
 alias adb=~/.my_adb
 alias adbcolor=~/.colored_logcat.py
 alias dpis=~/.dpis
@@ -168,3 +161,54 @@ function svn {
     print cpt_c, " conflicts are found.";
   }';
 }
+
+# Android emulator aliases -------------------------------------------------------------------------
+alias adbinput='adb shell input'
+ 
+alias adbtext='adbinput text'
+ 
+alias adbkey='adbinput keyevent'
+
+alias adbtab='adbkey 61'
+ 
+alias adbdown='adbkey 20'
+ 
+alias adbback='adbkey 4'
+ 
+alias adbenter='adbkey 66'
+
+alias adbuser_technician='adbtext technician11@yopmail.com'
+alias adbpass_admin='adbtext admin'
+alias applogin_3plenish_technician11='adbuser_technician;adbtab;adbpass_admin;adbtab;adbtab;adbenter'
+
+alias adbuser_tdahl='adbtext tdahl123@yopmail.com'
+alias adbpass_perfect1='adbtext perfect1'
+alias applogin_3plenish_tdahl123='adbuser_tdahl;adbtab;adbpass_perfect1;adbtab;adbtab;adbenter'
+# navigate splash screen
+ 
+alias appconf='for i in {1..3};do adbtab;done;adbenter'
+ 
+# select test environment
+ 
+alias apptest='appconf;adbtab;adbenter'
+ 
+# select production environment
+ 
+alias appprod='appconf;for i in {1..3};do adbtab;done;adbenter'
+
+# END Android emulator aliases ---------------------------------------------------------------------
+
+# Android application projects sendBuildScipts -----------------------------------------------------
+
+alias sendBuild3plenish="./home/dimitar/src/3plenish-android/sendBuild3plenish"
+# End Android application projects sendBuildScipts -------------------------------------------------
+
+# Android get Application database -------------------------------------------------
+alias pullDb3plenish="adb pull /data/data/com.threeplenish/databases/threeplenish-db /home/dimitar/"
+
+alias pushDb3plenish="adb push /home/dimitar/threeplenish-db /data/data/com.threeplenish/databases/"
+# END Android get Application database -------------------------------------------------
+
+# Android uninstall Applications -------------------------------------------------
+alias uninstall3plenish="adb uninstall com.threeplenish"
+# END Android uninstall Applications -------------------------------------------------
