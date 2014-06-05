@@ -1,0 +1,8 @@
+Here's the full list of Google Tasks interfaces:
+
+https://mail.google.com/tasks/m - mobile version
+https://mail.google.com/tasks/android - Android version
+https://mail.google.com/tasks/iphone - iPhone version
+https://mail.google.com/tasks/ig - iGoogle gadget
+https://mail.google.com/tasks/canvas - iGoogle gadget in canvas view
+(replace /tasks/ with /tasks/a/your_domain/ for the Google Apps versions).
