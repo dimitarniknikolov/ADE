@@ -1,9 +1,9 @@
-set imap_user = "dimitarniknikolov@gmail.com"
-set imap_pass = "JudgeNot88"
+set imap_user = "someUsername@gmail.com"
+set imap_pass = "somePass"
 
-set smtp_url = "smtp://dimitarniknikolov@smtp.gmail.com:587/"
-set smtp_pass = "JudgeNot88"
-set from = "dimitarniknikolov@gmail.com"
+set smtp_url = "smtp://someUsername@smtp.gmail.com:587/"
+set smtp_pass = "somePass"
+set from = "someUsername@gmail.com"
 set realname = "Dimitar Nikolov"
 
 #set folder = "imaps://imap.gmail.com:993"
