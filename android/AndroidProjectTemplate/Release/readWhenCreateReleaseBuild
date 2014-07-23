@@ -1,0 +1,11 @@
+// Check these from Debug to Productoion
+
+change base URL in Constants.java (public static final boolean APP_IS_DEBUG = false;)
+
+com.google.android.maps.v2.API_KEY to release value in strings.xml string name="maps.v2.API_KEY"
+
+Manifest (versionCode, versionName, support screens, permissions, features, ...)
+
+GoogleAnalytics IDs (ga_trackingId, ga_dispatchPeriod, ga_debug; strings.xml, analytics.xml)
+
+setup proguard-project.txt
