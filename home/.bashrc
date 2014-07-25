@@ -179,15 +179,11 @@ alias adbback='adbkey 4'
  
 alias adbenter='adbkey 66'
 
-alias adbuser_technician='adbtext technician11@yopmail.com'
+alias adbuser_technician='adbtext some_email@aaa.com'
 alias adbpass_admin='adbtext admin'
-alias applogin_3plenish_technician11='adbuser_technician;adbtab;adbpass_admin;adbtab;adbtab;adbenter'
+alias applogin_technician='adbuser_technician;adbtab;adbpass_admin;adbtab;adbtab;adbenter'
 
-alias adbuser_tdahl='adbtext tdahl123@yopmail.com'
-alias adbpass_perfect1='adbtext perfect1'
-alias applogin_3plenish_tdahl123='adbuser_tdahl;adbtab;adbpass_perfect1;adbtab;adbtab;adbenter'
-# navigate splash screen
- 
+# navigate splash screen 
 alias appconf='for i in {1..3};do adbtab;done;adbenter'
  
 # select test environment
@@ -199,11 +195,6 @@ alias apptest='appconf;adbtab;adbenter'
 alias appprod='appconf;for i in {1..3};do adbtab;done;adbenter'
 
 # END Android emulator aliases ---------------------------------------------------------------------
-
-# Android application projects sendBuildScipts -----------------------------------------------------
-
-alias sendBuild3plenish="./home/dimitar/src/3plenish-android/sendBuild3plenish"
-# End Android application projects sendBuildScipts -------------------------------------------------
 
 # Android get Application database -------------------------------------------------
 alias pullDb3plenish="adb pull /data/data/com.threeplenish/databases/threeplenish-db /home/dimitar/"
