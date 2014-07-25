@@ -16,6 +16,9 @@ import android.view.animation.Animation;
 import com.mentormate.android.template.R;
 import com.mentormate.android.template.util.L;
 
+/**
+ * @author MentorMate
+ */
 public class TemplateFragment extends Fragment {
 
     private static final String TAG = L.makeLogTag(TemplateFragment.class);
