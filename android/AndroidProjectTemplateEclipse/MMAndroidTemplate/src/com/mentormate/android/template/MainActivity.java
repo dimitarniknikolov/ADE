@@ -12,6 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+/**
+ * @author MentorMate
+ */
 public class MainActivity extends ActionBarActivity {
 
     @Override
